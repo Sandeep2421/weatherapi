@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+       
+        #main{
+            
+            background-image: url("https://media.istockphoto.com/id/1007768414/photo/blue-sky-with-bright-sun-and-clouds.jpg?s=612x612&w=0&k=20&c=MGd2-v42lNF7Ie6TtsYoKnohdCfOPFSPQt5XOz4uOy4=");
+            background-size: cover;
+            background-position: center;
+           min-height: 100vh;
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+           padding: 20px;
+           gap: 20px;
+        }
+        #inp {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #container {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 490px;
+            color: azure;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <input id="inp">
+    <button onclick="apicall()">Check</button>
+
+   <div id="container"></div>
+
+
+</div>
+
+
+
+
+    <script>
+        async function apicall(){
+
+            
+
+            inp=document.getElementById("inp").value
+            if(!inp){
+                alert("please enter a city name")
+            }
+
+         
+
+            let res=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inp}&units=metric&appid=9db34d2f19c4d164cd51d9b592bdc878`)
+            let newdata=await res.json()
+            console.log(newdata)
+            
+
+            document.getElementById("container").innerHTML = "";
+   
+   // Create a list of weather data
+   let weatherInfo = `
+       <h2>Weather in ${newdata.name}</h2>
+       <p><strong>Temperature:</strong> ${newdata.main.temp}°C</p>
+       <p><strong>Feels Like:</strong> ${newdata.main.feels_like}°C</p>
+       <p><strong>Humidity:</strong> ${newdata.main.humidity}%</p>
+    
+
+       <p><strong>Weather:</strong> ${newdata.weather[0].description}</p>
+   `
+
+   // Display the data on the webpage
+   document.getElementById("container").innerHTML = weatherInfo;
+
+           
+        
+
+        }
+        
+
+        
+
+
+    </script>
+    
+</body>
+</html>
